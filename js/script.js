@@ -35,10 +35,36 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
+  function makeTodo(todoObject) {
+    const textTitle = document.createElement("h2"); // membuat objek DOM
+    textTitle.innerText = todoObject.task; // menyematkan konten berupa teks
+
+    const textTimestamp = document.createElement("p"); // membuat objek DOM
+    textTimestamp.innerText = todoObject.timestamp; // menyematkan konten berupa teks
+
+    const textContainer = document.createElement("div"); // membuat objek DOM
+    textContainer.classList.add("inner"); // menyematkan konten berupa teks
+    textContainer.append(textTitle, textTimestamp);
+
+    const container = document.createElement("div");
+    container.classList.add("item", "shadow");
+    container.append(textContainer);
+    container.setAttribute("id", `todo-${todoObject.id}`);
+
+    return container;
+  }
+
   const todos = [];
   const RENDER_EVENT = "render-todo";
 
   document.addEventListener(RENDER_EVENT, function () {
-    console.log(todos);
+    // console.log(todos);
+    const uncompletedTODOList = document.getElementById("todos");
+    uncompletedTODOList.innerHTML = " ";
+
+    for (const todoItem of todos) {
+      const todoElement = makeTodo(todoItem);
+      uncompletedTODOList.append(todoElement);
+    }
   });
 });
